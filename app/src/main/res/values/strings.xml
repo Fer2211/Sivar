@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Sivar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- Secciones -->
+    <string name="sec">Configuración</string>
+    <string name="sec_map">Mapa</string>
+    <string name="sec_gal">Galeria</string>
+    <string name="sec_men">Mensajes</string>
+    <string name="sec_set">Ajustes</string>
+    <string name="sec_set1">Toast1</string>
+    <string name="sec_set2">Toast2</string>
+    <string name="title_activity_frag_men2">Mensajes</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_login">Ingresa</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_phone">Télefono</string>
+    <string name="prompt_name">Nombre</string>
+    <string name="action_sign_in">Ingresa</string>
+    <string name="error_field_required">El campo es requerido</string>
+    <string name="error_invalid_phone">Telefono no valido</string>
+
+
+</resources>
