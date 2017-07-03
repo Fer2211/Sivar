@@ -1,5 +1,6 @@
 package lb.sivar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -88,6 +89,10 @@ public class main extends AppCompatActivity
             FragmentManager.beginTransaction().replace(R.id.con,new mapFragment()).commit();
         } else if (id == R.id.nav_gallery) {
             FragmentManager.beginTransaction().replace(R.id.con,new galleryFragment()).commit();
+        } else if (id == R.id.nav_share) {
+            Intent i = new Intent(getApplicationContext(),genericActivity.class);
+            i.putExtra("opc","login");
+            startActivity(i);
         } else if (id == R.id.nav_send) {
             FragmentManager.beginTransaction().replace(R.id.con,new chatFragment()).commit();
         } else if (id == R.id.nav_manage) {
