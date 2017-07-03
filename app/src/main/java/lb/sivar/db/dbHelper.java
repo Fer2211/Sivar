@@ -45,10 +45,12 @@ public class dbHelper extends SQLiteOpenHelper {
                 + mens.DATE + " INTEGER DEFAULT 1,"
                 + "UNIQUE (" + mens.ID + "))");
 
+        objContact c = new objContact("7904-2863","Yo");
         objContact c1 = new objContact("7623-4567","Sophie");
         objContact c2 = new objContact("9881-7243","Elizabeth");
         objContact c3 = new objContact("6578-2345","Patricia");
 
+        db.insert(contact.TABLE_NAME,null,c.toContentValues());
         db.insert(contact.TABLE_NAME,null,c1.toContentValues());
         db.insert(contact.TABLE_NAME,null,c2.toContentValues());
         db.insert(contact.TABLE_NAME,null,c3.toContentValues());
@@ -93,6 +95,7 @@ public class dbHelper extends SQLiteOpenHelper {
         s.update(contact.TABLE_NAME,
                 c.toContentValues(),
                 contact.NAME + "=?",var);
+        s.close();
     }
     public Cursor getPhone(){
         String var[] = {"Yo"};

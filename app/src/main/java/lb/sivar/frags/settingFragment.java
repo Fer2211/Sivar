@@ -29,8 +29,8 @@ public class settingFragment extends Fragment {
         //db.dump();
         DatabaseUtils.dumpCursor(c);
         c.moveToPosition(0);
-        st = c.getString(0);
-        edit.setText(st);
+        //st = c.getString(0);
+        //edit.setText(st);
         return v;
     }
 }
