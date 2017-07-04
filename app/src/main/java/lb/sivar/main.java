@@ -39,9 +39,7 @@ public class main extends AppCompatActivity
     public void onResume(){
         super.onResume();
         conect con = new conect();
-        if (!con.c(getApplicationContext())) {
-            Toast.makeText(getApplicationContext(), "Compruebe conexion con Internet", Toast.LENGTH_LONG).show();
-        }
+        con.c(getApplicationContext());
     }
 
     @Override
