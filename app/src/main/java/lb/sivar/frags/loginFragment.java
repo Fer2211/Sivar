@@ -1,6 +1,7 @@
 package lb.sivar.frags;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lb.sivar.R;
+import lb.sivar.commons;
 import lb.sivar.conec.conect;
 
 public class loginFragment extends baseVolleyFragment{
@@ -40,17 +42,16 @@ public class loginFragment extends baseVolleyFragment{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String url = "https://sivar111.000webhostapp.com/sivar/v1/users/register";
-                //String url = "http://192.168.1.3/s/v1/users/register";
-                String url = "http://192.168.0.21/s/v1/users/register";
-                JSONObject j = new JSONObject();
-                try {
-                    j.put("phone",lPhone.getText().toString());
-                    j.put("name",lName.getText().toString());
-                }catch (JSONException e){
-                    Toast.makeText(getActivity(),"Reingresa tus datos",Toast.LENGTH_LONG).show();
+                c = new conect(); if(c.c(getActivity())){
+                    JSONObject j = new JSONObject();
+                    try {
+                        j.put("phone",lPhone.getText().toString());
+                        j.put("name",lName.getText().toString());
+                    }catch (JSONException e){
+                        Toast.makeText(getActivity(),"Reingresa tus datos",Toast.LENGTH_LONG).show();
+                    }
+                    makeRequest(Request.Method.POST, commons.URL_U_REGISTER,j);
                 }
-                makeRequest(Request.Method.POST,url,j);
             }
         });
     }
@@ -58,6 +59,6 @@ public class loginFragment extends baseVolleyFragment{
     @Override
     protected void onConnectionFinished(JSONObject j){
         Toast.makeText(getActivity(),"Bienvenido " + lName.getText().toString(),Toast.LENGTH_LONG).show();
-        getActivity().getFragmentManager().popBackStack();
+        getActivity().onBackPressed();
     }
 }

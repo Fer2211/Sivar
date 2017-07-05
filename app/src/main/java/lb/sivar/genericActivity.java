@@ -18,6 +18,7 @@ public class genericActivity extends AppCompatActivity {
         switch (opc){
             case "login":
                 FragmentManager.beginTransaction().replace(R.id.generic_fragment,new loginFragment()).commit();
+
                 break;
             default:
         }

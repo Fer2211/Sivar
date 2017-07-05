@@ -1,6 +1,8 @@
 package lb.sivar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.File;
+
 import lb.sivar.conec.*;
 import lb.sivar.frags.*;
 
@@ -22,6 +26,15 @@ public class main extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + getString(R.string.preferences) + ".xml");
+        SharedPreferences sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+        if(!sharedPref.contains("register") || sharedPref.getInt("register",0)!=1){
+            Intent i = new Intent(getApplicationContext(),genericActivity.class);
+            i.putExtra("opc","login");
+            startActivity(i);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -88,9 +101,7 @@ public class main extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             FragmentManager.beginTransaction().replace(R.id.con,new galleryFragment()).commit();
         } else if (id == R.id.nav_share) {
-            Intent i = new Intent(getApplicationContext(),genericActivity.class);
-            i.putExtra("opc","login");
-            startActivity(i);
+
         } else if (id == R.id.nav_send) {
             FragmentManager.beginTransaction().replace(R.id.con,new chatFragment()).commit();
         } else if (id == R.id.nav_manage) {

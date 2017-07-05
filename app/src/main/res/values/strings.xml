@@ -6,6 +6,10 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Preferencias -->
+    <string name="preferences">PREFERENCES</string>
+    <string name="def_register">nose</string>
+
     <!-- Secciones -->
     <string name="sec">Configuración</string>
     <string name="sec_map">Mapa</string>
