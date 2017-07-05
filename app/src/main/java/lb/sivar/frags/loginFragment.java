@@ -1,32 +1,27 @@
 package lb.sivar.frags;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import lb.sivar.R;
 import lb.sivar.conec.conect;
 
-public class loginFragment extends baseVolleyFragment {
+public class loginFragment extends baseVolleyFragment{
     private static String TAG = "-------> login";
 
     private EditText lName;
     private EditText lPhone;
     private Button login;
-
 
     private conect c;
 
@@ -34,9 +29,9 @@ public class loginFragment extends baseVolleyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.login_fragment, container, false);
-        lName = (EditText) v.findViewById(R.id.login_name);
-        lPhone = (EditText) v.findViewById(R.id.login_phone);
-        login = (Button) v.findViewById(R.id.login_sign_in);
+        lName =  v.findViewById(R.id.login_name);
+        lPhone =  v.findViewById(R.id.login_phone);
+        login =  v.findViewById(R.id.login_sign_in);
         return v;
     }
     @Override
@@ -45,29 +40,24 @@ public class loginFragment extends baseVolleyFragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeRequest();
+                //String url = "https://sivar111.000webhostapp.com/sivar/v1/users/register";
+                //String url = "http://192.168.1.3/s/v1/users/register";
+                String url = "http://192.168.0.21/s/v1/users/register";
+                JSONObject j = new JSONObject();
+                try {
+                    j.put("phone",lPhone.getText().toString());
+                    j.put("name",lName.getText().toString());
+                }catch (JSONException e){
+                    Toast.makeText(getActivity(),"Reingresa tus datos",Toast.LENGTH_LONG).show();
+                }
+                makeRequest(Request.Method.POST,url,j);
             }
         });
     }
 
-    private void makeRequest(){
-        c = new conect(); if(c.c(getActivity())) {
-            String url = "http://192.168.1.3/s/pruebas.php";
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject j) {
-                    lName.setText(j.toString());
-                    Log.d(TAG, "onResponse: "+j.toString());
-                    onConnectionFinished();
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError e) {
-                    Log.d(TAG, "onErrorResponse: "+e.toString());
-                    onConnectionFailed(e.toString());
-                }
-            });
-            addToQueue(request);
-        }
+    @Override
+    protected void onConnectionFinished(JSONObject j){
+        Toast.makeText(getActivity(),"Bienvenido " + lName.getText().toString(),Toast.LENGTH_LONG).show();
+        getActivity().getFragmentManager().popBackStack();
     }
 }
