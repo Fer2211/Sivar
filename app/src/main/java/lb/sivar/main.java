@@ -22,6 +22,8 @@ import lb.sivar.frags.*;
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public final static int REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +31,10 @@ public class main extends AppCompatActivity
 
         File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + getString(R.string.preferences) + ".xml");
         SharedPreferences sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
-        if(!sharedPref.contains("register") || sharedPref.getInt("register",0)!=1){
+        if (!sharedPref.contains("register") || sharedPref.getInt("register",0)!=1){
             Intent i = new Intent(getApplicationContext(),genericActivity.class);
             i.putExtra("opc","login");
-            startActivity(i);
+            startActivityForResult(i,REQUEST_CODE);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,6 +49,21 @@ public class main extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //Agregado
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                int result=data.getIntExtra("result",0);
+                SharedPreferences sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt("register", result);
+                editor.apply(); editor.commit();
+            }
+        }
+
     }
     @Override
     public void onResume(){

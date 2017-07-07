@@ -1,9 +1,8 @@
 package lb.sivar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import lb.sivar.frags.loginFragment;
 
 public class genericActivity extends AppCompatActivity {
 
@@ -16,9 +15,7 @@ public class genericActivity extends AppCompatActivity {
 
         if(opc==null) opc="";
         switch (opc){
-            case "login":
-                FragmentManager.beginTransaction().replace(R.id.generic_fragment,new loginFragment()).commit();
-
+            case "":
                 break;
             default:
         }

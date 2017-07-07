@@ -1,7 +1,7 @@
-package lb.sivar.frags;
+package lb.sivar;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,13 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
-import lb.sivar.conec.conect;
 import lb.sivar.conec.volleyS;
 
-public class baseVolleyFragment extends Fragment {
-    private static String TAG = "-------->BasevF";
+public class baseVolleyActivity extends AppCompatActivity {
+    private static String TAG = "-------->BasevActivity";
 
     private volleyS volley;
     protected RequestQueue fRequestQueue;
@@ -33,7 +31,8 @@ public class baseVolleyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        volley = volleyS.getInstance(getActivity().getApplicationContext());
+
+        volley = volleyS.getInstance(getApplicationContext());
         fRequestQueue = volley.getRequestQueue();
     }
 
@@ -65,33 +64,33 @@ public class baseVolleyFragment extends Fragment {
                         onConnectionFinished(j);
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError e) {
-                        // As of f605da3 the following should work
-                        NetworkResponse response = e.networkResponse;
-                        if (e instanceof ServerError && response != null) {
-                            JSONObject obj;
-                            try {
-                                String res = new String(response.data,
-                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                // Now you can use any deserializer to make sense of data
-                                obj = new JSONObject(res);
-                                Log.d(TAG, "onEResponse: " + res);
-                                onConnectionFinished(obj);
-                            } catch (UnsupportedEncodingException e1) {
-                                // Couldn't properly decode data to string
-                                e1.printStackTrace();
-                                onConnectionFailed("Problemas con el servidor.");
-                            } catch (JSONException e2) {
-                                // returned data is not JSONObject?
-                                e2.printStackTrace();
-                                onConnectionFailed("Problemas con el servidor, reintente en un momento.");
-                            }
-                        }
+            @Override
+            public void onErrorResponse(VolleyError e) {
+                // As of f605da3 the following should work
+                NetworkResponse response = e.networkResponse;
+                if (e instanceof ServerError && response != null) {
+                    JSONObject obj;
+                    try {
+                        String res = new String(response.data,
+                                HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        obj = new JSONObject(res);
+                        Log.d(TAG, "onEResponse: " + res);
+                        onConnectionFinished(obj);
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                        onConnectionFailed("Problemas con el servidor.");
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                        onConnectionFailed("Problemas con el servidor, reintente en un momento.");
                     }
-                });
-            addToQueue(request);
-        }
+                }
+            }
+        });
+        addToQueue(request);
+    }
 
     protected void onPreStartConnection() {
         //getActivity().setProgressBarIndeterminateVisibility(true);
@@ -100,7 +99,7 @@ public class baseVolleyFragment extends Fragment {
     protected void onConnectionFinished(JSONObject json) {
         //getActivity().setProgressBarIndeterminateVisibility(false);
         try{
-            Toast.makeText(getActivity(), json.getString("message"), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), json.getString("message"), Toast.LENGTH_LONG).show();
         } catch (JSONException j){
             Log.d(TAG, "onConnectionFinished: Problemas con el JSON");
         }
@@ -108,6 +107,6 @@ public class baseVolleyFragment extends Fragment {
 
     protected void onConnectionFailed(String error) {
         //getActivity().setProgressBarIndeterminateVisibility(false);
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
     }
 }
