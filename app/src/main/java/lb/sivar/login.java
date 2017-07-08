@@ -1,17 +1,11 @@
 package lb.sivar;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,10 +17,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-import lb.sivar.baseVolleyActivity;
+import lb.sivar.conec.baseVolleyActivity;
 import lb.sivar.conec.conect;
-
-import static lb.sivar.main.REQUEST_CODE;
 
 public class login extends baseVolleyActivity {
     private static String TAG = "-------> login";
@@ -37,16 +29,20 @@ public class login extends baseVolleyActivity {
 
     private conect c;
 
+    private File f;
+    private SharedPreferences sharedPref;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        File f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + getString(R.string.preferences) + ".xml");
-        SharedPreferences sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+        f = new File("/data/data/" + getPackageName() +  "/shared_prefs/" + getString(R.string.preferences) + ".xml");
+        sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
         if (sharedPref.contains("register") && sharedPref.getInt("register",0)==1){
             Intent i = new Intent(getApplicationContext(),main.class);
             startActivity(i);
-        } else {
+        } else{
             setContentView(R.layout.login_fragment);
             lName = (EditText) findViewById(R.id.login_name);
             lPhone = (EditText) findViewById(R.id.login_phone);
@@ -65,8 +61,27 @@ public class login extends baseVolleyActivity {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if (sharedPref.contains("register") && sharedPref.getInt("register",0)==1){
+            onBackPressed();
+        }
+    }
+
+    @Override
     protected void onConnectionFinished(JSONObject j){
         Toast.makeText(getApplication(),"Bienvenido " + lName.getText().toString(),Toast.LENGTH_LONG).show();
+
+        SharedPreferences sharedPref = getApplication().getSharedPreferences(getString(R.string.preferences), Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("register",1);
+
+        editor.putString("phone",lPhone.getText().toString());
+        editor.putString("name",lName.getText().toString());
+
+        editor.apply(); editor.commit();
+
         Intent i = new Intent(getApplicationContext(),main.class);
         startActivity(i);
     }
@@ -105,11 +120,12 @@ public class login extends baseVolleyActivity {
                 j.put("name",name);
             }catch (JSONException e){
                 Toast.makeText(getApplication(),"Reingresa tus datos",Toast.LENGTH_LONG).show();
+            } finally {
+                makeRequest(Request.Method.POST, commons.URL_U_REGISTER,j);
             }
-            makeRequest(Request.Method.POST, commons.URL_U_REGISTER,j);
         }
     }
 
-    private boolean isPhoneValid(String s) { return (s.length() > 8); }
+    private boolean isPhoneValid(String s) { return (s.length() > 7); }
     private boolean isNameValid(String s) { return (s.length() > 4 || s.length() < 40); }
 }

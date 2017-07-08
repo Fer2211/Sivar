@@ -44,7 +44,9 @@ public class dbHelper extends SQLiteOpenHelper {
                 + mens.MESSAGE + " TEXT NOT NULL,"
                 + mens.DATE + " INTEGER DEFAULT 1,"
                 + "UNIQUE (" + mens.ID + "))");
+    }
 
+    /*
         objContact c = new objContact("7904-2863","Yo");
         objContact c1 = new objContact("7623-4567","Sophie");
         objContact c2 = new objContact("9881-7243","Elizabeth");
@@ -62,7 +64,7 @@ public class dbHelper extends SQLiteOpenHelper {
         db.insert(chat.TABLE_NAME,null,o1.toContentValues());
         db.insert(chat.TABLE_NAME,null,o2.toContentValues());
         db.insert(chat.TABLE_NAME,null,o3.toContentValues());
-    }
+     */
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -87,23 +89,6 @@ public class dbHelper extends SQLiteOpenHelper {
         DatabaseUtils.dumpCursor(getAllChats());
         DatabaseUtils.dumpCursor(getAllMens());
     }
-    public void savePhone(String p){
-        String var[] = {"Yo"};
-        objContact c = new objContact();
-        c.constructValues(getPhone());
-        SQLiteDatabase s = getWritableDatabase();
-        s.update(contact.TABLE_NAME,
-                c.toContentValues(),
-                contact.NAME + "=?",var);
-        s.close();
-    }
-    public Cursor getPhone(){
-        String var[] = {"Yo"};
-        return getReadableDatabase().query(
-                contact.TABLE_NAME,null,
-                contact.NAME + "=?",
-                var,null,null,null);
-    }
     public Cursor getAllContacts() {
         try {
             return getReadableDatabase().query(
@@ -111,6 +96,21 @@ public class dbHelper extends SQLiteOpenHelper {
                     null,null,null,null,null,null);
         }catch (Exception e){ return null; }
     }
+    public Cursor getAllChats() {
+        try {
+            return getReadableDatabase().query(
+                    chat.TABLE_NAME,
+                    null,null,null,null,null,null);
+        }catch (Exception e){ return null; }
+    }
+    public Cursor getAllMens() {
+        try {
+            return getReadableDatabase().query(
+                    mens.TABLE_NAME,
+                    null,null,null,null,null,null);
+        }catch (Exception e){ return null; }
+    }
+
     public long saveChat(objChat o) {
         SQLiteDatabase s = getWritableDatabase();
         return s.insert(
@@ -131,13 +131,6 @@ public class dbHelper extends SQLiteOpenHelper {
                         chat.ID + "=?",
                         var,null,null,null);
     }
-    public Cursor getAllChats() {
-        try {
-            return getReadableDatabase().query(
-                    chat.TABLE_NAME,
-                    null,null,null,null,null,null);
-        }catch (Exception e){ return null; }
-    }
     public Cursor getMen_Chat(String id) {
         String var[] = {id};
         try {
@@ -145,13 +138,6 @@ public class dbHelper extends SQLiteOpenHelper {
                     mens.TABLE_NAME,null,
                     mens.ID_CHAT + "=?",
                     var,null,null,null);
-        }catch (Exception e){ return null; }
-    }
-    public Cursor getAllMens() {
-        try {
-            return getReadableDatabase().query(
-                    mens.TABLE_NAME,
-                    null,null,null,null,null,null);
         }catch (Exception e){ return null; }
     }
 }

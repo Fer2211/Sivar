@@ -1,4 +1,4 @@
-package lb.sivar;
+package lb.sivar.conec;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +50,6 @@ public class baseVolleyActivity extends AppCompatActivity {
             if (fRequestQueue == null)
                 fRequestQueue = volley.getRequestQueue();
             request.setRetryPolicy(new DefaultRetryPolicy(60000,3,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            onPreStartConnection();
             fRequestQueue.add(request);
         }
     }
@@ -76,7 +75,7 @@ public class baseVolleyActivity extends AppCompatActivity {
                         // Now you can use any deserializer to make sense of data
                         obj = new JSONObject(res);
                         Log.d(TAG, "onEResponse: " + res);
-                        onConnectionFinished(obj);
+                        onConnectionSolution(obj);
                     } catch (UnsupportedEncodingException e1) {
                         // Couldn't properly decode data to string
                         e1.printStackTrace();
@@ -92,9 +91,24 @@ public class baseVolleyActivity extends AppCompatActivity {
         addToQueue(request);
     }
 
-    protected void onPreStartConnection() {
-        //getActivity().setProgressBarIndeterminateVisibility(true);
+    protected void onConnectionSolution(JSONObject json) {
+        String s = "";
+        try {
+            switch (json.getInt("code")){
+                case 420: s = "Problemas con la transferencia de datos"; break;
+                case 4201: s = "Reingresa el telefono e intenta"; break;
+                case 4202: s = "Reingresa el nombre e intenta"; break;
+
+                default:
+                    s = "Problemas con el servidor, espera una actualizacion pronto";
+            }
+        } catch (JSONException j){
+            s = "Error en la transferencia";
+        } finally {
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+        }
     }
+
 
     protected void onConnectionFinished(JSONObject json) {
         //getActivity().setProgressBarIndeterminateVisibility(false);

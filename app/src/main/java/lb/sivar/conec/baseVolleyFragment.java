@@ -1,4 +1,4 @@
-package lb.sivar.frags;
+package lb.sivar.conec;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

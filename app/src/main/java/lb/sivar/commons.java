@@ -9,9 +9,9 @@ public class commons {
     /**
      * Variables globales
      */
-    //private static final String URL = "https://sivar111.000webhostapp.com/sivar/v1/";
+    private static final String URL = "https://sivar111.000webhostapp.com/sivar/v1/";
     //public static final String URL = "http://192.168.1.3/s/v1/";
-    private static final String URL = "http://192.168.0.21/s/v1/";
+    //private static final String URL = "http://192.168.0.21/s/v1/";
 
     public static final String URL_U_REGISTER = URL + "users/register";
 
