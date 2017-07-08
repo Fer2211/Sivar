@@ -103,11 +103,11 @@ public class login extends baseVolleyActivity {
         View focusView = null;
 
         if (!TextUtils.isEmpty(name) && !isNameValid(name)) {
-            lName.setError(getString(R.string.error_invalid_password));
+            lName.setError(getString(R.string.error_invalid_name));
             focusView = lName;
             cancel = true;
         } else if (TextUtils.isEmpty(phone) && !isPhoneValid(phone)) {
-            lPhone.setError(getString(R.string.error_invalid_email));
+            lPhone.setError(getString(R.string.error_invalid_phone));
             focusView = lPhone;
             cancel = true;
         }

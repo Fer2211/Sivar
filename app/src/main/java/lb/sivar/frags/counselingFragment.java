@@ -23,7 +23,7 @@ import lb.sivar.message;
  * Created by HP on 20/6/2017.
  */
 
-public class chatFragment extends Fragment implements adapterChat.OnItemClickListener {
+public class counselingFragment extends Fragment implements adapterChat.OnItemClickListener {
     private static String TAG = "-------->fragMen";
     
     private View v;

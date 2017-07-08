@@ -1,8 +1,5 @@
 package lb.sivar;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,17 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.io.File;
 
 import lb.sivar.conec.*;
 import lb.sivar.frags.*;
 
 public class main extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    public final static int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,13 +84,11 @@ public class main extends AppCompatActivity
 
         if (id == R.id.nav_map) {
             FragmentManager.beginTransaction().replace(R.id.con,new mapFragment()).commit();
-        } else if (id == R.id.nav_gallery) {
-            FragmentManager.beginTransaction().replace(R.id.con,new galleryFragment()).commit();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-            FragmentManager.beginTransaction().replace(R.id.con,new chatFragment()).commit();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_wave) {
+            FragmentManager.beginTransaction().replace(R.id.con,new waveFragment()).commit();
+        } else if (id == R.id.nav_counseling) {
+            FragmentManager.beginTransaction().replace(R.id.con,new counselingFragment()).commit();
+        } else if (id == R.id.nav_setting) {
             FragmentManager.beginTransaction().replace(R.id.con,new settingFragment()).commit();
         }
 

@@ -12,12 +12,12 @@ import lb.sivar.R;
  * Created by HP on 20/6/2017.
  */
 
-public class galleryFragment extends Fragment {
+public class waveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup con,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.gallery_fragment, con, false);
+        View v = inflater.inflate(R.layout.wave_fragment, con, false);
 
         return v;
     }

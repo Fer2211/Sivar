@@ -24,13 +24,7 @@ public class settingFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.setting_fragment, con, false);
         edit = (EditText) v.findViewById(R.id.PhoneNumber);
-        db = new dbHelper(v.getContext());
-        Cursor c = db.getPhone();
-        //db.dump();
-        DatabaseUtils.dumpCursor(c);
-        c.moveToPosition(0);
-        //st = c.getString(0);
-        //edit.setText(st);
+
         return v;
     }
 }
