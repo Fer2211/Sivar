@@ -8,7 +8,7 @@
 
     <!-- Preferencias -->
     <string name="preferences">PREFERENCES</string>
-    <string name="def_register">register</string>
+    <string name="def_register">registro</string>
 
     <!-- Secciones -->
     <string name="sec">Configuración</string>
